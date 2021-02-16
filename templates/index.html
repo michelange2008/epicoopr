@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="fr" dir="ltr">
+  <head>
+    <link rel="shortcut icon" href="{% static "favicon.png" %}">
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+    <meta charset="utf-8">
+    <title>Epicerie coopérative</title>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="jumbotron">
+        <h1 class="display-1">Epicerie coopérative</h1>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-md-10">
+          <div class="card-deck">
+
+            <div class="card" style="width:30%">
+              <img src="{% static "epicerie.jpg" %}" alt="">
+              <div class="card-body">
+                <h5>Commande</h5>
+                <p>Allez sur cette page pour consulter les commandes en
+                cours et procéder à votre propre commande.</p>
+              </div>
+              <div class="card-footer">
+                <a class="btn btn-success" href="epicomm/">Commandes</a>
+              </div>
+            </div>
+            <div class="card" style="width:30%">
+              <img src="{% static "administration.jpeg" %}" alt="">
+              <div class="card-body">
+                <h5>Administration</h1>
+                <p>C'est la partie du site réservées aux gestionnaires
+                de l'épicerie coopérative.</p>
+              </div>
+              <div class="card-footer">
+                <a class="btn btn-danger" href="admin/">Administration</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </body>
+</html>

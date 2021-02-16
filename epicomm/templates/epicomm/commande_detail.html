@@ -1,0 +1,50 @@
+{% extends "./base.html" %}
+
+{% block header %}
+
+  {% include "./header.html" with title="commande" icon="icons/orange.png" %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+  <div class="row justify-content-center my-3">
+    <div class="col-md-10">
+      <div class="card" style="width:55%">
+        <div class="card-header
+        {% if commande.closed  %} alert-danger
+        {% else %} alert-success
+        {% endif %}">
+
+        <h1>{{ commande }} ({{ commande.created_at }})</h1>
+        <h4>
+          {% if commande.closed %}
+          Commande clôturée le {{ commande.closed_at }}
+          {% else %}
+          Date de clôture le {{ commande.closed_at|default_if_none:"Indéterminée" }}
+          {% endif %}
+        </h4>
+      </div>
+      <div class="card-body">
+        <ul class="list-group">
+          {% for product in commande.products.all  %}
+          <li class="lead list-item d-flex justify-content-between align-items-center">
+            {{ product.name|capfirst }} (conditionnement: {{product.packing}} {{ product.unite.abbreviation }})
+            <span class="badge badge-success badge-pill">{{ product.pu|default_if_none:"Non encore fixé" }} €</span>
+          </li>
+          <p class="card-text">{{ product.description }}</p>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="card-footer text-right">
+        <a class="btn btn-secondary" href="{% url 'commande_list' %}">Retour à la liste</a>
+        <a class="btn btn-success" href="{% url 'panierSaisie' commande.id %}">Saisir ma commande</a>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+{% endblock %}

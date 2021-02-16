@@ -1,0 +1,14 @@
+{% extends "epicomm/base.html" %}
+
+{% block content %}
+  <h1 class="display-1">Produits</h1>
+
+  <ul>
+
+  {% for product in product_list  %}
+  <li>
+    {{product.name}}
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}

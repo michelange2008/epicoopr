@@ -1,0 +1,25 @@
+{% extends "epicomm/base.html" %}
+
+{% block header %}
+  {% include "./header.html" with icon="favicon.png" title="liste des commandes" %}
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+  <div class="row justify-content-center my-3">
+    <div class="col-md-9">
+      <h1 class="display-4">Commandes en cours</h1>
+      {% for commande in commande_list  %}
+        {% if commande.closed == False %}
+          <a class="btn btn-secondary" href="{% url 'commande_detail' commande.id %}">
+            {{ commande.name }} ({{ commande.created_at }})
+          </a>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

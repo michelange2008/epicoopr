@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="fr" dir="ltr">
+  <head>
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+    <link rel="shortcut icon" href="{% static "favicon.png" %}">
+    <meta charset="utf-8">
+    <title>Commandes</title>
+  </head>
+  <body>
+    {% block header %}{% endblock %}
+    {% block menu %}{% endblock %}
+    {% block content %}{% endblock %}
+    {% block footer %}{% endblock %}
+  </body>
+</html>

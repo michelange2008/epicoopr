@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'registration',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'epicomm.apps.EpicommConfig',
+    'bootstrap4',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -55,7 +58,7 @@ ROOT_URLCONF = 'epicoopr.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -127,3 +130,14 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/icons')
 
 STATIC_ROOT = '/static/'
+
+STATICFILES_DIRS = [
+    BASE_DIR / "static"
+]
+# ça c'est pour avoir de jolis formulaires avec bootstrap4 tout en écrivant
+# {{ form|crispy }}
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+# Ca c'est django-registration-redux (app registration) pour la gestion
+# de l'authentification
+ACCOUNT_ACTIVATION_DAYS = 7
+REGISTRATION_AUTO_LOGIN = True
