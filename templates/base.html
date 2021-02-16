@@ -3,7 +3,6 @@
   <head>
     <meta charset="utf-8">
     <title></title>
-    <meta>
     {% load bootstrap4 %}
     {% bootstrap_css %}
     {% bootstrap_javascript jquery='full' %}
@@ -15,8 +14,10 @@
       <div class="row my-3">
         <div class="col-md-8 mx-auto">
           <div class="card">
-            <div class="card-header">
-              <h5>Connexion</h5>
+            <div class="card-header alert-success">
+              <h1>
+                {% block title %}{% endblock %}
+              </h1>
             </div>
             <div class="card-body lead">
               {% block content %}{% endblock %}
