@@ -25,9 +25,9 @@ SECRET_KEY = '0fo83sn1@sl8%(t60dl#8555*jgd&w&b9&q@oqp7+-iwi9i9v9'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'testserver']
 
-
+DEFAULT_CHARSET = 'utf-8'
 # Application definition
 
 INSTALLED_APPS = [
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'epicomm.apps.EpicommConfig',
     'bootstrap4',
     'crispy_forms',
+    'fontawesome-free',
 ]
 
 MIDDLEWARE = [
@@ -111,7 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'fr'
+LANGUAGE_CODE = 'fr-FR'
 
 TIME_ZONE = 'Europe/Paris'
 

@@ -1,6 +1,7 @@
 from django.db import models
+import datetime
 from django.utils import timezone
-from django.contrib.auth.models import User
+from django.urls import reverse
 
 
 class Categorie(models.Model):
@@ -32,6 +33,7 @@ class Product(models.Model):
     denomination. Définit par un nom, une description, une catégorie
     (cf. class correspondante), une unité (cf. class correspondante),
     """
+
     def __str__(self):
         return self.name
 
@@ -45,54 +47,43 @@ class Product(models.Model):
     categorie = models.ForeignKey('Categorie', on_delete=models.PROTECT)
     unite = models.ForeignKey('Unite', on_delete=models.PROTECT)
     pu = models.DecimalField(max_digits=8, decimal_places=2)
-    avaible = models.BooleanField('disponible', default=True)
     packing = models.PositiveIntegerField('conditionnement')
     icon = models.ImageField(default='icone.svg')
 
 
-class Panier(models.Model):
-
-    def __str__(self):
-        return self.user.username
-
-    class Meta:
-        verbose_name = "Commande individuelle"
-        verbose_name_plural = "Commandes individuelles"
-
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    item = models.ManyToManyField('Item')
-    created_at = models.DateField('créée le ', default=timezone.now)
-    price = models.DecimalField(max_digits=8, decimal_places=2, default=0)
-    paid = models.BooleanField('payée')
-    collected = models.BooleanField('emmenée')
-
-
-class Item(models.Model):
-
-    def __str__(self):
-        return self.product.name + ' (' + str(self.qtt) + ' ' + self.product.unite.abbreviation + ')'
-
-    class Meta:
-        verbose_name = "Produit avec quantité d'un utilisateur"
-        verbose_name_plural = "Produits avec quantité d'un utilisateur"
-
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
-    qtt = models.PositiveIntegerField(null=True)
-
-
 class Commande(models.Model):
+    """Commande de produits définit par un nom et une liste de Produits
+    Cette commmande possèdes des attributs de date (creation, clôture,
+    livraison) et d'état (clôturée, livrée)."""
 
     def __str__(self):
-        return self.name
+        return f'{self.name} ({self.created_at.strftime("%d/%m/%Y")})'
+
+    def get_absolute_url(self):
+        return reverse('commande_detail', args=[str(self.id)])
+
+    """Fonction destinée à l'affichage dans la page admin"""
+
+    def get_products(self):
+        return ",".join([str(p) for p in self.products.all()])
 
     class Meta:
         ordering = ['-created_at']
         verbose_name = "Commande globale"
         verbose_name_plural = "Commandes globales"
 
-    name = models.CharField('commande', max_length=191, unique=True)
-    created_at = models.DateField('créée le ', default = timezone.now)
-    closed = models.BooleanField()
+    name = models.CharField(
+        'nom de la commande',
+        max_length=191,
+        unique_for_date="created_at"
+        )
+    products = models.ManyToManyField(Product, verbose_name='produits')
+    shipping = models.DecimalField(
+        'coût du transport',
+        max_digits=8, decimal_places=2,
+        default=0)
+    created_at = models.DateField('créée le ', default=timezone.now)
     closed_at = models.DateField('fermée le ', blank=True, null=True)
-    products = models.ManyToManyField(Product)
+    closed = models.BooleanField('cloturée', default=False)
+    delivered_at = models.DateField('livrée le ', blank=True, null=True)
+    delivered = models.BooleanField('livrée', default=False)

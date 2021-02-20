@@ -18,7 +18,7 @@
         {% else %} alert-success
         {% endif %}">
 
-        <h1>{{ commande }} ({{ commande.created_at }})</h1>
+        <h1>{{ commande }}</h1>
         <h4>
           {% if commande.closed %}
           Commande clôturée le {{ commande.closed_at }}
@@ -40,7 +40,9 @@
       </div>
       <div class="card-footer text-right">
         <a class="btn btn-secondary" href="{% url 'commande_list' %}">Retour à la liste</a>
-        <a class="btn btn-success" href="{% url 'panierSaisie' commande.id %}">Saisir ma commande</a>
+        {% if not commande.closed %}
+          <a class="btn btn-success" href="{% url 'panier_edit' commande.id %}">Saisir ma commande</a>
+        {% endif %}
       </div>
     </div>
   </div>
