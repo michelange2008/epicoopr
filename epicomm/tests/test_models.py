@@ -1,13 +1,13 @@
 from django.test import TestCase
+from django.contrib.auth.models import User
 from ..models.main_models import Commande
+from ..models.second_models import Panier
 
 
 class CommandeTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
-        commande = Commande.objects.create(
-            name='légumes',
-            )
+        Commande.objects.create(name='légumes')
 
     def test_name_label(self):
         commande = Commande.objects.get(pk=1)
@@ -27,3 +27,21 @@ class CommandeTestCase(TestCase):
     def test_get_absolute_url(self):
         commande = Commande.objects.get(pk=1)
         self.assertEqual(commande.get_absolute_url(), '/epicomm/commande/1/')
+
+
+class PanierTestCase(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        user = User.objects.create(username='toto')
+        commande = Commande.objects.create(name='légumes')
+        Panier.objects.create(user=user, commande=commande)
+
+    def test_name(self):
+        panier = Panier.objects.get(pk=1)
+        name = str(panier)
+        self.assertEqual(name, 'légumes')
+
+    def test_field_label(self):
+        panier = Panier.objects.get(pk=1)
+        field_label = panier._meta.get_field('price').verbose_name
+        self.assertEqual(field_label, 'montant de la commande')

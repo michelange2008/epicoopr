@@ -1,5 +1,4 @@
 from django.db import models
-import datetime
 from django.utils import timezone
 from django.urls import reverse
 
@@ -57,7 +56,7 @@ class Commande(models.Model):
     livraison) et d'état (clôturée, livrée)."""
 
     def __str__(self):
-        return f'{self.name} ({self.created_at.strftime("%d/%m/%Y")})'
+        return f'{self.name} ({self.created_at})'
 
     def get_absolute_url(self):
         return reverse('commande_detail', args=[str(self.id)])
