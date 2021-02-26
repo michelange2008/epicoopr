@@ -41,7 +41,7 @@
       <div class="card-footer text-right">
         <a class="btn btn-secondary" href="{% url 'commande_list' %}">Retour à la liste</a>
         {% if not commande.closed %}
-          <a class="btn btn-success" href="{% url 'panier_edit' commande.id %}">Saisir ma commande</a>
+          <a class="btn btn-success" href="{% url 'panier_create' commande.id %}">Saisir ma commande</a>
         {% endif %}
       </div>
     </div>

@@ -6,7 +6,7 @@
       <a href="{% url link|default:"commande_list" %}">
         <img class="" src="{% static icon %}" alt="logo" style="height:100px">
       </a>
-      <h1 class="display-4">{% trans title|capfirst %} </h1>
+      <h1 class="display-4">{{ title|capfirst }} </h1>
       {% if user.is_authenticated %}
         <p class="lead">
           <a class="btn btn-light" href="{% url 'auth_logout' %}">

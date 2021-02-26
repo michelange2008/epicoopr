@@ -1,15 +1,23 @@
-from django.urls import path
-from . import views
+from django.urls import path, include
+from .views import commande_views, panier_views
 
 
 urlpatterns = [
-    path('', views.CommandeView.as_view(), name='commande_list'),
-    path('commande/<int:pk>/', views.CommandeDetailView.as_view(),
+
+    path('', commande_views.CommandeView.as_view(), name='commande_list'),
+
+    path('commande/<int:pk>/', commande_views.CommandeDetailView.as_view(),
          name='commande_detail'),
-    path('panier_edit/<int:commande_id>/', views.panier_edit, name="panier_edit"),
-    path('panier_list/', views.panier_list, name="panier_list"),
-    path('panier_show/<int:panier_id>/', views.panier_show,
-         name="panier_show"),
-    path('panier_destroy/<int:panier_id>/', views.panier_destroy,
-         name="panier_destroy"),
+
+    path('paniers/liste/', panier_views.panier_list, name="panier_list"),
+
+    path('panier_create/<int:commande_id>/', panier_views.panier_create,
+         name="panier_create"),
+
+    path('panier/<int:panier_id>/', include([
+        path('modifier/', panier_views.panier_edit, name="panier_edit"),
+        path('voir/', panier_views.panier_show, name="panier_show"),
+        path('supprimer/', panier_views.panier_destroy, name="panier_destroy"),
+    ])),
+
 ]
