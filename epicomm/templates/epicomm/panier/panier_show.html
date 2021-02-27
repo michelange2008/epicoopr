@@ -1,0 +1,42 @@
+{% extends "../base.html" %}
+
+{% block header %}
+
+  {% include "../header.html" with title=panier icon="icons/orange.png" %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+  <div class="row justify-content-center my-3">
+    <div class="col-md-10">
+      <div class="card" style="width:55%">
+        <div class="card-header">
+
+        <h4>
+          Commande du {{ panier.commande.created_at }}
+        </h4>
+      </div>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+          {% for item in panier.item_set.all %}
+            <li class="list-group-item">
+              {{item}}
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="card-footer text-right">
+        <a class="btn btn-secondary" href="{% url 'panier_list' %}">Mes paniers</a>
+        {% if not panier.commande.closed %}
+          <a class="btn btn-success" href="#">Modifier mon panier</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+{% endblock %}

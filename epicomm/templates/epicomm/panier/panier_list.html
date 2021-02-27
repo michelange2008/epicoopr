@@ -1,0 +1,46 @@
+{% extends "../base.html" %}
+
+{% block header %}
+
+  {% include "../header.html" with title="Vos paniers" icon="icons/default.svg" %}
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="container-fluid">
+    <div class="row justify-content-center my-3">
+      <div class="col-md-10">
+        <div class="card-deck">
+
+        {% for panier in paniers.all %}
+        <div class="card">
+            <div class="card-header">
+              <h1>{{ panier }} du {{panier.created_at}}</h1>
+              <p>Commande {{ panier.commande.closed|yesno:"cloturée (ne peut plus être modifiée), en cours"}}</p>
+              <p>Commande {{ panier.commande.delivered|yesno:"arrivée,non livrée"}}</p>
+            </div>
+            <div class="card-body">
+              {% for item in panier.item_set.all  %}
+              <p class="card-text lead">{{ item }}</p>
+              {% endfor %}
+              <hr class="divider">
+              <p class="card-text lead">Payée: {{panier.paid|yesno:"oui,non"}}</p>
+              <p class="card-text lead">Retirée: {{panier.collected|yesno:"oui,non"}}</p>
+            </div>
+            <div class="card-footer">
+                <a class="btn btn-success" href="{% url 'panier_show' panier.id %}">Voir</a>
+              {% if panier.commande.closed != True %}
+                <a class="btn btn-warning" href="{% url 'panier_edit' panier.commande.id %}">Modifier</a>
+                <a class="btn btn-danger" href="{% url 'panier_destroy' panier.id %}">Supprimer</a>
+              {% else %}
+              {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      </div>
+    </div>
+  </div>
+{% endblock %}
