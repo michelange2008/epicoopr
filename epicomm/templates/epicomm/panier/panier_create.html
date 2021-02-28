@@ -2,31 +2,33 @@
 
 {% block header %}
 
-  {% include "../header.html" with title="remplissez votre panier" icon="icons/default.svg" %}
+{% include "../header.html" with title="remplissez votre panier" icon="icons/default.svg" %}
 
 {% endblock %}
 
 {% block content %}
 
-  <div class="container-fluid">
-    <div class="row justify-content-center my-3">
-      <div class="col-md-10">
-        <h1>{{ commande.name }}</h1>
-        <h2>Commande du {{ commande.created_at }}</h2>
-        <form action="" method="post">
-          {% csrf_token %}
-          {% for product in commande.products.all  %}
-          <div class="form-group col-md-4">
-            <label for="product_{{product.id}}">
-              {{ product }} ({{product.unite.abbreviation}})
-            </label>
-            <input class="form-control" type="number" name="qtt_{{ product.id }}" value="">
-          </div>
-          {% endfor %}
-          <input class="btn btn-success" type="submit" name="" value="Enregistrer">
-          <a class="btn btn-danger" href="{% url 'commande_detail' commande.id %}">Annuler</a>
-        </form>
-      </div>
+<div class="container-fluid">
+  <div class="row justify-content-center my-3">
+    <div class="col-md-10">
+      <h1>{{ commande.name }}</h1>
+      <h2>Commande du {{ commande.created_at }}</h2>
+      <form action="" method="post">
+        {% csrf_token %}
+        {% for product in commande.products.all  %}
+        <div class="form-group col-md-4">
+          <label for="product_{{product.id}}">
+            {{ product }} ({{product.unite.abbreviation}})
+          </label>
+          <input class="form-control" type="number" name="qtt_{{ product.id }}" value="">
+        </div>
+        {% endfor %}
+        <input class="btn btn-success" type="submit" name="" value="Enregistrer">
+        <a class="btn btn-danger" href="{% url 'commande_detail' commande.id %}">Annuler</a>
+      </form>
     </div>
   </div>
+</div>
+<div></div>
+
 {% endblock %}
